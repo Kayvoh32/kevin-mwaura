@@ -4,7 +4,7 @@ A professional portfolio website showcasing web development, graphic design, and
 
 ## 🚀 Live Portfolio
 
-Visit the live portfolio: [kevin-mwaura.github.io](https://kevin-mwaura.github.io)
+Visit the live portfolio: [(https://kevin-mwaura.github.io)](https://kayvoh32.github.io/kevin-mwaura/)
 
 ## 💼 About
 
