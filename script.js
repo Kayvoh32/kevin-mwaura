@@ -1,42 +1,123 @@
-
-/* G��G�� Scroll-spy nav G��G�� */
+/* ─────────────────────────
+   Scroll navbar state
+───────────────────────── */
 const nav = document.getElementById('navbar');
+
 window.addEventListener('scroll', () => {
   nav.classList.toggle('scrolled', window.scrollY > 40);
 });
 
-/* G��G�� Reveal on scroll G��G�� */
+
+/* ─────────────────────────
+   Reveal on scroll
+───────────────────────── */
 const revealEls = document.querySelectorAll('.reveal');
+
 const revealObs = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
+
     if (entry.isIntersecting) {
       entry.target.classList.add('visible');
       revealObs.unobserve(entry.target);
     }
+
   });
-}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+}, {
+  threshold: 0.1,
+  rootMargin: '0px 0px -40px 0px'
+});
+
 revealEls.forEach(el => revealObs.observe(el));
 
-/* G��G�� Stagger children in grids G��G�� */
-document.querySelectorAll('.skills-grid .skill-card').forEach((el, i) => {
+
+/* ─────────────────────────
+   Stagger animations
+───────────────────────── */
+
+/* Skills */
+document.querySelectorAll('.skills-grid .skill-card')
+.forEach((el, i) => {
   el.style.transitionDelay = `${0.06 * i}s`;
 });
-document.querySelectorAll('.projects-grid .project-card').forEach((el, i) => {
+
+/* Projects */
+document.querySelectorAll('.projects-grid .project-card')
+.forEach((el, i) => {
   el.style.transitionDelay = `${0.08 * i}s`;
 });
 
-/* G��G�� Smooth active nav link G��G�� */
-const sections = document.querySelectorAll('section[id]');
-const navAs = document.querySelectorAll('.nav-links a');
-const activeObs = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      navAs.forEach(a => {
-        a.style.color = a.getAttribute('href') === `#${e.target.id}`
-          ? 'var(--gold)' : '';
-      });
-    }
-  });
-}, { threshold: 0.5 });
-sections.forEach(s => activeObs.observe(s));
+/* Vision cards */
+document.querySelectorAll('.vision-grid .vision-card')
+.forEach((el, i) => {
+  el.style.transitionDelay = `${0.08 * i}s`;
+});
 
+
+/* ─────────────────────────
+   Active nav link
+───────────────────────── */
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-links a');
+
+const activeObs = new IntersectionObserver((entries) => {
+
+  entries.forEach(entry => {
+
+    if (entry.isIntersecting) {
+
+      navLinks.forEach(link => {
+
+        link.style.color =
+          link.getAttribute('href') === `#${entry.target.id}`
+            ? 'var(--gold)'
+            : '';
+
+      });
+
+    }
+
+  });
+
+}, {
+  threshold: 0.5
+});
+
+sections.forEach(section => activeObs.observe(section));
+
+
+/* ─────────────────────────
+   Smooth scroll offset
+───────────────────────── */
+navLinks.forEach(link => {
+
+  link.addEventListener('click', (e) => {
+
+    const targetId = link.getAttribute('href');
+
+    if (targetId.startsWith('#')) {
+
+      e.preventDefault();
+
+      const target = document.querySelector(targetId);
+
+      if (target) {
+
+        const offset = 80;
+
+        const top =
+          target.getBoundingClientRect().top +
+          window.pageYOffset -
+          offset;
+
+        window.scrollTo({
+          top,
+          behavior: 'smooth'
+        });
+
+      }
+
+    }
+
+  });
+
+});
